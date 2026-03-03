@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GrammarGame.Models;
 
 namespace GrammarGame.Services;
@@ -6,6 +8,10 @@ namespace GrammarGame.Services;
 public class QuizService
 {
     private readonly HttpClient _http;
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
     private List<Question>? _allQuestions;
 
     public QuizService(HttpClient http)
@@ -15,7 +21,7 @@ public class QuizService
 
     public async Task<List<Question>> LoadQuestionsAsync()
     {
-        _allQuestions ??= await _http.GetFromJsonAsync<List<Question>>("data/questions.json") ?? [];
+        _allQuestions ??= await _http.GetFromJsonAsync<List<Question>>("data/questions.json", JsonOptions) ?? [];
         return _allQuestions;
     }
 
