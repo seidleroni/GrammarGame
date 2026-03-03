@@ -187,27 +187,51 @@ html, body {
     color: #718096;
 }
 
+/* Page wrapper — pushes footer to bottom */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-wrapper > .quiz-container {
+    flex: 1;
+}
+
 /* Footer */
 .site-footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    margin-top: 3rem;
-    font-size: 0.8rem;
-    color: #a0aec0;
+    width: 100%;
+    border-top: 1px solid #e2e8f0;
+    padding: 1.5rem 1rem;
+    background-color: #f7fafc;
 }
 
-.site-footer a {
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: #a0aec0;
+    flex-wrap: wrap;
+}
+
+.footer-content a {
     color: #718096;
     text-decoration: none;
+    transition: color 0.15s;
 }
 
-.site-footer a:hover {
-    color: #4a5568;
-    text-decoration: underline;
+.footer-content a:hover {
+    color: #2c5282;
 }
 
-.site-footer .separator {
-    margin: 0 0.4rem;
+.footer-content .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #cbd5e0;
+    flex-shrink: 0;
 }
 
 /* Error UI */
