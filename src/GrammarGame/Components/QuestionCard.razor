@@ -1,3 +1,4 @@
+@inject IJSRuntime JS
 
 <div class="question-card">
     <div class="progress-text">Question @QuestionNumber of @TotalQuestions</div>
@@ -18,16 +19,6 @@
                 OnSelected="HandleAnswer" />
         }
     </div>
-
-    @if (ShowFeedback && IsCorrect)
-    {
-        <div class="confetti-container" @key="confettiKey">
-            @for (int i = 0; i < 30; i++)
-            {
-                <div class="confetti-piece" style="--i: @i"></div>
-            }
-        </div>
-    }
 
     @if (ShowFeedback)
     {
@@ -63,22 +54,17 @@
     private bool ShowFeedback;
     private int SelectedIndex = -1;
     private bool IsCorrect;
-    private int confettiKey;
 
     private async Task HandleAnswer(int index)
     {
         SelectedIndex = index;
         IsCorrect = index == Question.CorrectIndex;
-        if (IsCorrect) confettiKey++;
         ShowFeedback = true;
-        await OnAnswered.InvokeAsync(index);
-    }
 
-    // Reset state when question changes
-    protected override void OnParametersSet()
-    {
-        if (!ShowFeedback) return;
-        // Reset is handled by parent re-rendering with new question
+        if (IsCorrect)
+            await JS.InvokeVoidAsync("confetti.burst", $"answer-btn-{Question.CorrectIndex}");
+
+        await OnAnswered.InvokeAsync(index);
     }
 
     public void Reset()
