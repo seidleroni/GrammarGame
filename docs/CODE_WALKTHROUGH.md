@@ -260,14 +260,18 @@ private string TierMessage => Score switch
 
 ### `Layout/MainLayout.razor`
 
-Wraps every page in a centered container and adds the footer:
+Wraps everything in a flexbox column so the footer sticks to the bottom of the viewport:
 
 ```razor
-<main class="quiz-container">
-    @Body
-</main>
-<footer class="site-footer">...</footer>
+<div class="page-wrapper">
+    <main class="quiz-container">
+        @Body
+    </main>
+    <footer class="site-footer">...</footer>
+</div>
 ```
+
+The footer also displays a build label (commit hash + build number) on deployed builds. It reads this from `window.buildInfo` via JS interop in `OnAfterRenderAsync` — hidden in local dev where the values are "dev"/"local".
 
 ### `wwwroot/css/app.css`
 
@@ -275,11 +279,13 @@ All styling in one file. The design priorities:
 - **Kid-friendly:** Large fonts (18px base), big touch targets (56px min button height), 16px border radius
 - **Clear feedback:** Green for correct, red for wrong, dimmed for other choices
 - **Simple layout:** Single column, max-width 600px, centered
+- **No overflow:** `box-sizing: border-box` globally, `overflow-x: hidden` on body
 
 ### `wwwroot/index.html`
 
 The single HTML page that hosts the Blazor app. Key lines:
 - `<div id="app">` — Blazor mounts here
+- `window.buildInfo = { commit: "dev", build: "local" }` — Placeholders replaced by the CI workflow with the real commit SHA and build number
 - `<script src="_framework/blazor.webassembly.js">` — Loads the Blazor runtime
 - `<script src="js/confetti.js">` — Loads our confetti animation
 
@@ -327,9 +333,10 @@ GitHub Actions workflow that runs on every push to `master`:
 1. Checks out code
 2. Runs `dotnet publish` (compiles C# to WebAssembly)
 3. Patches the `<base href>` for GitHub Pages subdirectory hosting
-4. Adds `.nojekyll` (tells GitHub Pages not to process files with Jekyll)
-5. Copies `index.html` to `404.html` (so client-side routing works on direct URL access)
-6. Deploys to GitHub Pages
+4. Injects the short commit SHA and build number (`github.run_number`) into `window.buildInfo` in `index.html`
+5. Adds `.nojekyll` (tells GitHub Pages not to process files with Jekyll)
+6. Copies `index.html` to `404.html` (so client-side routing works on direct URL access)
+7. Deploys to GitHub Pages
 
 ---
 
