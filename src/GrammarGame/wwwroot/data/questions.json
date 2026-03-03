@@ -274,8 +274,8 @@
   {
     "id": 35,
     "topic": "PluralNoun",
-    "prompt": "Which word is a plural noun? \"The cats chased the mice.\"",
-    "choices": ["the", "chased", "cats", "mice"],
+    "prompt": "Which word is a plural noun? \"The cats chased the ball.\"",
+    "choices": ["the", "chased", "cats", "ball"],
     "correctIndex": 2,
     "explanation": "'Cats' is a plural noun because it means more than one cat."
   },
@@ -370,8 +370,8 @@
   {
     "id": 47,
     "topic": "PluralNoun",
-    "prompt": "Which word is a plural noun? \"The women carried their bags.\"",
-    "choices": ["carried", "their", "women", "bags"],
+    "prompt": "Which word is a plural noun? \"The women carried the heavy luggage.\"",
+    "choices": ["carried", "heavy", "women", "luggage"],
     "correctIndex": 2,
     "explanation": "'Women' is a plural noun because it means more than one woman."
   },
@@ -419,7 +419,7 @@
     "id": 53,
     "topic": "CompoundNoun",
     "prompt": "Which of these is a compound noun?",
-    "choices": ["sunshine", "bright", "warm", "outside"],
+    "choices": ["sunshine", "bright", "warm", "golden"],
     "correctIndex": 0,
     "explanation": "'Sunshine' is a compound noun made from two words: 'sun' + 'shine'."
   },
@@ -475,7 +475,7 @@
     "id": 60,
     "topic": "CompoundNoun",
     "prompt": "Which of these is a compound noun?",
-    "choices": ["happy", "playground", "outside", "running"],
+    "choices": ["happy", "playground", "large", "running"],
     "correctIndex": 1,
     "explanation": "'Playground' is a compound noun made from two words: 'play' + 'ground'."
   },
@@ -531,7 +531,7 @@
     "id": 67,
     "topic": "CompoundNoun",
     "prompt": "Which of these is a compound noun?",
-    "choices": ["backyard", "grass", "green", "outside"],
+    "choices": ["backyard", "grass", "green", "fence"],
     "correctIndex": 0,
     "explanation": "'Backyard' is a compound noun made from two words: 'back' + 'yard'."
   },
@@ -1026,10 +1026,10 @@
   {
     "id": 129,
     "topic": "Adverb",
-    "prompt": "Which word is an adverb? \"The car drove away noisily.\"",
-    "choices": ["car", "drove", "away", "noisily"],
+    "prompt": "Which word is an adverb? \"The old car moved noisily.\"",
+    "choices": ["old", "car", "moved", "noisily"],
     "correctIndex": 3,
-    "explanation": "'Noisily' is an adverb because it describes how the car drove."
+    "explanation": "'Noisily' is an adverb because it describes how the car moved."
   },
   {
     "id": 130,
@@ -1043,9 +1043,9 @@
     "id": 131,
     "topic": "Adverb",
     "prompt": "Which of these is an adverb?",
-    "choices": ["loud", "loudly", "louder", "loudness"],
+    "choices": ["brave", "bravely", "bravery", "braver"],
     "correctIndex": 1,
-    "explanation": "'Loudly' is an adverb because it describes how something is done. 'Loud' is an adjective."
+    "explanation": "'Bravely' is an adverb because it describes how something is done. 'Brave' is an adjective."
   },
   {
     "id": 132,
@@ -1099,9 +1099,9 @@
     "id": 138,
     "topic": "Contraction",
     "prompt": "What two words make the contraction \"can't\"?",
-    "choices": ["could not", "can not", "cannot", "came not"],
-    "correctIndex": 2,
-    "explanation": "\"Can't\" is a contraction of \"cannot\". The apostrophe replaces 'no'."
+    "choices": ["could not", "can not", "come not", "came not"],
+    "correctIndex": 1,
+    "explanation": "\"Can't\" is a contraction of \"can not\". The apostrophe replaces the 'o' in 'not'."
   },
   {
     "id": 139,
@@ -1123,7 +1123,7 @@
     "id": 141,
     "topic": "Contraction",
     "prompt": "What two words make the contraction \"it's\"?",
-    "choices": ["it was", "it has", "it is", "it will"],
+    "choices": ["it was", "it does", "it is", "it will"],
     "correctIndex": 2,
     "explanation": "\"It's\" is a contraction of \"it is\". The apostrophe replaces the 'i'."
   },
