@@ -10,6 +10,7 @@ public class QuizService
     private readonly HttpClient _http;
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
+        PropertyNameCaseInsensitive = true,
         Converters = { new JsonStringEnumConverter() }
     };
     private List<Question>? _allQuestions;
