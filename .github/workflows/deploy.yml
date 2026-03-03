@@ -33,6 +33,12 @@ jobs:
       - name: Set base path for GitHub Pages
         run: sed -i 's|<base href="/" />|<base href="/GrammarGame/" />|' output/wwwroot/index.html
 
+      - name: Inject build info
+        run: |
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          sed -i "s|commit: \"dev\"|commit: \"${SHORT_SHA}\"|" output/wwwroot/index.html
+          sed -i "s|build: \"local\"|build: \"#${{ github.run_number }}\"|" output/wwwroot/index.html
+
       - name: Add .nojekyll
         run: touch output/wwwroot/.nojekyll
 

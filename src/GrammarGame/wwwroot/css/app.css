@@ -239,6 +239,12 @@ html, body {
     flex-shrink: 0;
 }
 
+.footer-content .build-label {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.7rem;
+    color: #cbd5e0;
+}
+
 /* Error UI */
 #blazor-error-ui {
     color-scheme: light only;

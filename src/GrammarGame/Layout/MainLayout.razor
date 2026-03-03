@@ -1,4 +1,5 @@
 @inherits LayoutComponentBase
+@inject IJSRuntime JS
 
 <div class="page-wrapper">
     <main class="quiz-container">
@@ -12,6 +13,30 @@
             <span>MIT Licensed</span>
             <span class="dot"></span>
             <a href="https://github.com/seidleroni/GrammarGame" target="_blank" rel="noopener">View on GitHub</a>
+            @if (!string.IsNullOrEmpty(buildLabel))
+            {
+                <span class="dot"></span>
+                <span class="build-label">@buildLabel</span>
+            }
         </div>
     </footer>
 </div>
+
+@code {
+    private string? buildLabel;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var commit = await JS.InvokeAsync<string>("eval", "window.buildInfo?.commit ?? ''");
+            var build = await JS.InvokeAsync<string>("eval", "window.buildInfo?.build ?? ''");
+
+            if (!string.IsNullOrEmpty(commit) && commit != "dev")
+            {
+                buildLabel = $"{build} ({commit})";
+                StateHasChanged();
+            }
+        }
+    }
+}
