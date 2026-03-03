@@ -1,1 +1,12 @@
-@* Placeholder *@
+
+<div class="start-screen">
+    <h1>Grammar Quiz!</h1>
+    <p class="subtitle">Test your knowledge of the Parts of Speech</p>
+    <p class="description">Answer 20 questions about nouns, verbs, adjectives, and more!</p>
+    <button class="btn-start" @onclick="OnStart">Start Quiz</button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public EventCallback OnStart { get; set; }
+}

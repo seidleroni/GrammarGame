@@ -1,1 +1,28 @@
-@* Placeholder *@
+
+<div class="results-screen">
+    <h1>@TierMessage</h1>
+    <div class="score-display">
+        <span class="score-number">@Score</span>
+        <span class="score-total">out of @Total</span>
+    </div>
+    <button class="btn-start" @onclick="OnPlayAgain">Play Again</button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public int Score { get; set; }
+
+    [Parameter, EditorRequired]
+    public int Total { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnPlayAgain { get; set; }
+
+    private string TierMessage => Score switch
+    {
+        >= 18 => "Grammar Master!",
+        >= 14 => "Great Job!",
+        >= 10 => "Keep Practicing!",
+        _ => "Let's Try Again!"
+    };
+}

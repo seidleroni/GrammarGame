@@ -1,5 +1,72 @@
 @page "/"
+@inject QuizService QuizService
 
 <PageTitle>Grammar Quiz</PageTitle>
 
-<h1>Grammar Quiz</h1>
+@switch (phase)
+{
+    case QuizPhase.Start:
+        <StartScreen OnStart="StartQuiz" />
+        break;
+
+    case QuizPhase.Playing:
+        <QuestionCard
+            @ref="questionCard"
+            Question="@questions[currentIndex]"
+            QuestionNumber="@(currentIndex + 1)"
+            TotalQuestions="@questions.Count"
+            IsLastQuestion="@(currentIndex == questions.Count - 1)"
+            OnAnswered="RecordAnswer"
+            OnNext="NextQuestion" />
+        break;
+
+    case QuizPhase.Results:
+        <ResultsScreen
+            Score="@answers.Count(a => a.IsCorrect)"
+            Total="@questions.Count"
+            OnPlayAgain="ResetQuiz" />
+        break;
+}
+
+@code {
+    private QuizPhase phase = QuizPhase.Start;
+    private List<Question> questions = [];
+    private List<AnsweredQuestion> answers = [];
+    private int currentIndex;
+    private QuestionCard? questionCard;
+
+    private async Task StartQuiz()
+    {
+        questions = await QuizService.GenerateQuizAsync();
+        answers = [];
+        currentIndex = 0;
+        phase = QuizPhase.Playing;
+    }
+
+    private void RecordAnswer(int selectedIndex)
+    {
+        answers.Add(new AnsweredQuestion
+        {
+            Question = questions[currentIndex],
+            SelectedIndex = selectedIndex
+        });
+    }
+
+    private void NextQuestion()
+    {
+        if (currentIndex < questions.Count - 1)
+        {
+            currentIndex++;
+            questionCard?.Reset();
+        }
+        else
+        {
+            phase = QuizPhase.Results;
+        }
+    }
+
+    private void ResetQuiz()
+    {
+        phase = QuizPhase.Start;
+    }
+}

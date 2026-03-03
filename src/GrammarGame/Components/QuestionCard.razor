@@ -1,1 +1,88 @@
-@* Placeholder *@
+
+<div class="question-card">
+    <div class="progress-text">Question @QuestionNumber of @TotalQuestions</div>
+    <div class="topic-badge">@FormatTopic(Question.Topic)</div>
+    <p class="prompt">@Question.Prompt</p>
+
+    <div class="choices">
+        @for (int i = 0; i < Question.Choices.Count; i++)
+        {
+            var index = i;
+            <AnswerButton
+                Text="@Question.Choices[index]"
+                Index="index"
+                Disabled="ShowFeedback"
+                ShowFeedback="ShowFeedback"
+                CorrectIndex="@Question.CorrectIndex"
+                SelectedIndex="@SelectedIndex"
+                OnSelected="HandleAnswer" />
+        }
+    </div>
+
+    @if (ShowFeedback)
+    {
+        <div class="explanation @(IsCorrect ? "explanation-correct" : "explanation-wrong")">
+            <strong>@(IsCorrect ? "Correct!" : "Not quite!")</strong>
+            @Question.Explanation
+        </div>
+        <button class="btn-next" @onclick="OnNext">
+            @(IsLastQuestion ? "See Results" : "Next Question")
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public Question Question { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public int QuestionNumber { get; set; }
+
+    [Parameter, EditorRequired]
+    public int TotalQuestions { get; set; }
+
+    [Parameter]
+    public bool IsLastQuestion { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<int> OnAnswered { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnNext { get; set; }
+
+    private bool ShowFeedback;
+    private int SelectedIndex = -1;
+    private bool IsCorrect;
+
+    private async Task HandleAnswer(int index)
+    {
+        SelectedIndex = index;
+        IsCorrect = index == Question.CorrectIndex;
+        ShowFeedback = true;
+        await OnAnswered.InvokeAsync(index);
+    }
+
+    // Reset state when question changes
+    protected override void OnParametersSet()
+    {
+        if (!ShowFeedback) return;
+        // Reset is handled by parent re-rendering with new question
+    }
+
+    public void Reset()
+    {
+        ShowFeedback = false;
+        SelectedIndex = -1;
+        IsCorrect = false;
+        StateHasChanged();
+    }
+
+    private static string FormatTopic(Topic topic) => topic switch
+    {
+        Topic.CommonNoun => "Common Noun",
+        Topic.ProperNoun => "Proper Noun",
+        Topic.PluralNoun => "Plural Noun",
+        Topic.CompoundNoun => "Compound Noun",
+        _ => topic.ToString()
+    };
+}
