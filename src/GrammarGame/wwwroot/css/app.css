@@ -187,6 +187,29 @@ html, body {
     color: #718096;
 }
 
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: #a0aec0;
+}
+
+.site-footer a {
+    color: #718096;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #4a5568;
+    text-decoration: underline;
+}
+
+.site-footer .separator {
+    margin: 0 0.4rem;
+}
+
 /* Error UI */
 #blazor-error-ui {
     color-scheme: light only;
